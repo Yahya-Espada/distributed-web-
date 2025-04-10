@@ -1,48 +1,79 @@
-# 📦 Subscription Service Microservice
+# 🚆 Travel Subscription Platform - Microservices Architecture
 
-Ce projet fait partie d'une architecture **microservices** développée avec **Spring Boot**, et vise à gérer les **abonnements utilisateurs** dans une plateforme de voyage distribuée. Il est conçu pour être intégré à un système complet incluant :
-- 🔍 **Eureka Server** pour le service discovery
-- 🌐 **API Gateway** pour le routage centralisé
-- 🐳 **Docker** pour la conteneurisation
-- 🗄️ **H2 Database** (en mémoire) pour les tests
+## 📌 Description
+
+This project is a **microservices-based travel subscription management platform** designed with Spring Boot and Docker. It enables users to subscribe to different travel plans and facilitates service registration and discovery using Eureka.
+
+## 🧱 Architecture
+
+```
+                +-----------------------+
+                |   Postman / Browser   |
+                +----------+------------+
+                           |
+                           v
+                +-----------------------+
+                |   API Gateway (8080)  |
+                +----------+------------+
+                           |
+         +----------------+------------------+
+         |                                   |
+         v                                   v
++-------------------+             +------------------------+
+| subscription-service | <-----> |    Eureka Server (8761) |
+|     (Port: 8081)     |         +------------------------+
++-------------------+
+```
+
+## 🛠️ Technologies Used
+
+- **Java 17**
+- **Spring Boot 3**
+- **Spring Cloud Eureka**
+- **Spring Cloud Gateway**
+- **Spring Data JPA**
+- **H2 In-Memory Database**
+- **Lombok**
+- **Docker**
+
+## 📦 Microservices
+
+### ✅ subscription-service
+
+- Handles CRUD operations for subscriptions.
+- Connected to an in-memory H2 database.
+- Registers with Eureka for service discovery.
+
+### 🚪 API Gateway
+
+- Routes requests to the appropriate microservices.
+- Registers with Eureka.
+
+### 🧭 Eureka Server
+
+- Service discovery and registry.
+
+## 🐳 Dockerization
+
+Each microservice includes a `Dockerfile` to containerize the application.
+
+```
+docker build -t subscription-service .
+docker run -p 8081:8081 subscription-service
+```
+
+## 🔮 Future Improvements
+
+- `docker-compose.yml` for orchestration
+- Kubernetes deployment
+- CI/CD with GitHub Actions
+- OpenFeign for inter-service communication
+- Keycloak for authentication and authorization
+
+## 🧪 Testing
+
+Use **Postman** to test all the endpoints via the API Gateway (port 8080).
 
 ---
 
-🧾 Fonctionnalités de subscription-service
-🔄 CRUD complet sur les abonnements
-
-🔍 Recherche par email utilisateur
-
-✅ Activation / désactivation d’un abonnement
-
-📅 Gestion des dates de début/fin
----
-
-
-🚀 Lancer le Projet avec Docker
-Assurez-vous d'avoir Docker Desktop installé.
-
-1. Compiler tous les projets
-   bash
-   Copy
-   Edit
-   cd eureka-server && mvn clean install
-   cd ../subscription-service && mvn clean install
-   cd ../api-gateway && mvn clean install
-
-2. Lancer l’ensemble via Docker Compose
-   bash
-   Copy
-   Edit
-   docker-compose up --build
-
-Les services seront accessibles aux ports suivants :
-
-Eureka: http://localhost:8761
-
-Subscription: http://localhost:8081
-
-API Gateway: http://localhost:8080
-
-
-
+> Developed with ❤️ by Yahya Elwafi
