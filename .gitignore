@@ -1,0 +1,21 @@
+# .gitignore content for Java/Spring/Docker project
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+.idea/
+target/
+bin/
+build/
+*.log
+*.swp
+.DS_Store
+
+# Docker-related
+**/docker-compose.override.yml
+**/.dockerignore
+
+# Environment files
+.env
+*.env

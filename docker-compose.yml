@@ -1,0 +1,36 @@
+services:
+  eureka-server:
+    image: yahyawafi/eureka-server:1.0
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-net
+
+  api-gateway:
+    image: yahyawafi/api-gateway:1.0
+    container_name: api-gateway
+    ports:
+      - "8085:8085"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    networks:
+      - microservices-net
+
+  subscription-service:
+    image: yahyawafi/subscriptionservice:latest
+    container_name: subscription-service
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge
